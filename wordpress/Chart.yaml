@@ -18,4 +18,4 @@ maintainers:
 name: wordpress
 sources:
 - https://github.com/bitnami/bitnami-docker-wordpress
-version: 9.3.0
+version: 9.3.000
