@@ -3,7 +3,7 @@
 
  Jenkins | Status  
 ------------ | -------------
-Helm Deploy  | [![Build Status](https://jenkins.navigatorglass.com/buildStatus/icon?job=Navigator-Charts%2Fnavigator-data)](https://jenkins.navigatorglass.com/view/Navigator/job/Navigator-Charts/job/navigator-data/)
+Helm Deploy  | [![Build Status](https://jenkins.navigatorglass.com/buildStatus/icon?job=Kubernetes.charts%2Fwordpress)](https://jenkins.navigatorglass.com/view/Kubernetes/job/Kubernetes.charts/job/wordpress/)
 
 
 ## Install 
