@@ -1,8 +1,8 @@
-# Elastic Search
+# MongoDB
 
  Jenkins | Status  
 ------------ | -------------
-Helm Deploy  | [![Build Status](https://jenkins.navigatorglass.com/buildStatus/icon?job=Kubernetes.charts%2Felasticsearch)](https://jenkins.navigatorglass.com/view/Kubernetes/job/Kubernetes.charts/job/elasticsearch/)
+MongoDB Helm Deploy  | [![Build Status](https://jenkins.navigatorglass.com/buildStatus/icon?job=Kubernetes.charts%2Fmongodb)](https://jenkins.navigatorglass.com/view/Kubernetes/job/Kubernetes.charts/job/mongodb/)
 
 ## Install 
 
