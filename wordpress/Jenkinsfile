@@ -1,10 +1,9 @@
 node('master') {
-    String helm_repository = 'chartmuseum'
-      String helm_package = 'chartmuseum/elasticsearch'
+      String helm_repository = 'chartmuseum'
+      String helm_package = 'chartmuseum/wordpress'
       String helm_repository_api = 'https://helm.navigatorglass.com/api/charts'
-      String helm_package_name = "navigator-data"
+      String helm_package_name = "wordpress"
       String helm_package_version = "1.0"
-
 
     timestamps {
 

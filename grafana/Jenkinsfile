@@ -1,10 +1,9 @@
 node('master') {
-      String helm_repository = 'navigator'
-      String helm_package = 'navigator/navigator-data'
+          String helm_repository = 'chartmuseum'
+      String helm_package = 'chartmuseum/grafana'
       String helm_repository_api = 'https://helm.navigatorglass.com/api/charts'
-      String helm_package_name = "navigator-data"
+      String helm_package_name = "grafana"
       String helm_package_version = "1.0"
-
 
     timestamps {
 
