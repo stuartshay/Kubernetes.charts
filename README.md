@@ -14,3 +14,9 @@ Wordpress Helm Deploy  | [![Build Status](https://jenkins.navigatorglass.com/bui
 helm repo add chartmuseum https://helm.navigatorglass.com
 ```
 
+## Search Repo
+
+```
+helm repo update
+helm search repo chartmuseum
+```
