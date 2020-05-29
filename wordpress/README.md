@@ -14,6 +14,19 @@ On browser goto
 ```bash
 http://192.168.50.10:30012
 ```
+Maridb connectivity
+Install mysql-client
+```bash
+sudo apt-get install mysql-client  
+```
+Forward maridb service port
+```bash
+kubectl port-forward svc/wp-mariadb 3306  
+```
+Connect to mariadb run
+```bash
+mysql -h 127.0.0.1 -P 3306 --protocol=TCP -u root --password=admin
+```
 ## Introduction
 
 This chart bootstraps a [WordPress](https://github.com/bitnami/bitnami-docker-wordpress) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
