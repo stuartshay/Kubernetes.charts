@@ -14,7 +14,10 @@ On browser goto
 ```bash
 http://192.168.50.10:30012
 ```
-Maridb connectivity
+username: user
+password: admin
+
+## Maridb connectivity
 Install mysql-client
 ```bash
 sudo apt-get install mysql-client  

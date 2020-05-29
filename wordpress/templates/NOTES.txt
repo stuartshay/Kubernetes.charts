@@ -46,7 +46,9 @@ To access your WordPress site from outside the cluster follow the steps below:
 
   echo Username: {{ .Values.wordpressUsername }}
   echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "wordpress.fullname" . }} -o jsonpath="{.data.wordpress-password}" | base64 --decode)
-
+  On Vagrant setup
+  username: user
+  password: admin
 {{- if .Values.metrics.enabled }}
 
 You can access Apache Prometheus metrics following the steps below:
