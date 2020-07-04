@@ -202,7 +202,7 @@ alertmanager:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    storageClass: "storageclass-nfs-dynamic"
 
     ## alertmanager data Persistent Volume Binding Mode
     ## If defined, volumeBindingMode: <volumeBindingMode>
@@ -289,7 +289,7 @@ alertmanager:
   service:
     annotations: {}
     labels: {}
-    clusterIP: ""
+    nodePort: ""
 
     ## Enabling peer mesh service end points for enabling the HA alert manager
     ## Ref: https://github.com/prometheus/alertmanager/blob/master/README.md
@@ -305,7 +305,7 @@ alertmanager:
     servicePort: 80
     # nodePort: 30000
     sessionAffinity: None
-    type: ClusterIP
+    type: NodePort
 
 ## Monitors ConfigMap changes and POSTs to a URL
 ## Ref: https://github.com/jimmidyson/configmap-reload
@@ -521,7 +521,7 @@ nodeExporter:
 
     # Exposed as a headless service:
     # https://kubernetes.io/docs/concepts/services-networking/service/#headless-services
-    clusterIP: None
+    nodePort: None
 
     ## List of IP addresses at which the node-exporter service is available
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -532,7 +532,7 @@ nodeExporter:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 9100
-    type: ClusterIP
+    type: NodePort
 
 server:
   ## Prometheus server container name
@@ -774,7 +774,7 @@ server:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    storageClass: "storageclass-nfs-dynamic"
 
     ## Prometheus server data Persistent Volume Binding Mode
     ## If defined, volumeBindingMode: <volumeBindingMode>
@@ -882,7 +882,7 @@ server:
   service:
     annotations: {}
     labels: {}
-    clusterIP: ""
+    nodePort: 30581
 
     ## List of IP addresses at which the Prometheus server service is available
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -893,7 +893,7 @@ server:
     loadBalancerSourceRanges: []
     servicePort: 80
     sessionAffinity: None
-    type: ClusterIP
+    type: NodePort
 
     ## Enable gRPC port on service to allow auto discovery with thanos-querier
     gRPC:
@@ -1045,7 +1045,7 @@ pushgateway:
     annotations:
       prometheus.io/probe: pushgateway
     labels: {}
-    clusterIP: ""
+    nodePort: ""
 
     ## List of IP addresses at which the pushgateway service is available
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -1055,7 +1055,7 @@ pushgateway:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     servicePort: 9091
-    type: ClusterIP
+    type: NodePort
 
   ## pushgateway Deployment Strategy type
   # strategy:
@@ -1065,7 +1065,7 @@ pushgateway:
     ## If true, pushgateway will create/use a Persistent Volume Claim
     ## If false, use emptyDir
     ##
-    enabled: false
+    enabled: true
 
     ## pushgateway data Persistent Volume access modes
     ## Must match those of existing PV or dynamic provisioner
@@ -1098,7 +1098,7 @@ pushgateway:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    storageClass: "storageclass-nfs-dynamic"
 
     ## pushgateway data Persistent Volume Binding Mode
     ## If defined, volumeBindingMode: <volumeBindingMode>
@@ -1173,6 +1173,10 @@ serverFiles:
           - targets:
             - localhost:9090
 
+      - job_name: mongo
+        static_configs:
+          - targets:
+            - mongo-mongodb:9216 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.
@@ -1188,7 +1192,8 @@ serverFiles:
       # default named port `https`. This works for single API server deployments as
       # well as HA API server deployments.
       - job_name: 'kubernetes-apiservers'
-
+        scrape_interval: 120s
+        scrape_timeout: 60s
         kubernetes_sd_configs:
           - role: endpoints
 
