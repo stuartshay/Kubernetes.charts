@@ -1,6 +1,6 @@
-# Navigator Grafana
+# Grafana Docker
 
-[![This image on DockerHub](https://img.shields.io/docker/pulls/stuartshay/kubernetes-grafana.svg)](https://hub.docker.com/r/stuartshay/navigator-grafana/) [![](https://images.microbadger.com/badges/image/stuartshay/kubernetes-grafana.svg)](https://microbadger.com/images/stuartshay/kubernetes-grafana "Get your own image badge on microbadger.com")
+[![This image on DockerHub](https://img.shields.io/docker/pulls/stuartshay/kubernetes-grafana.svg)](https://hub.docker.com/r/stuartshay/kubernetes-grafana/) [![](https://images.microbadger.com/badges/image/stuartshay/kubernetes-grafana.svg)](https://microbadger.com/images/stuartshay/kubernetes-grafana "Get your own image badge on microbadger.com")
 [![](https://images.microbadger.com/badges/version/stuartshay/kubernetes-grafana.svg)](https://microbadger.com/images/stuartshay/kubernetes-grafana "Get your own version badge on microbadger.com")
 
 Jenkins | Status  
