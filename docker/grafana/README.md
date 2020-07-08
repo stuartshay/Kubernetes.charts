@@ -5,7 +5,7 @@
 
 Jenkins | Status  
 ------------ | -------------
-Build Image  | [![Build Status](https://jenkins.navigatorglass.com/buildStatus/icon?job=Kubernetes.docker/grafana)](https://jenkins.navigatorglass.com/job/Navigator-Infrastructure/job/grafana/)
+Build Image  | [![Build Status](https://jenkins.navigatorglass.com/buildStatus/icon?job=Kubernetes.docker%2Fgrafana)](https://jenkins.navigatorglass.com/view/Kubernetes/job/Kubernetes.docker/job/grafana/)
 
 ```
 ├── docker-grafana
