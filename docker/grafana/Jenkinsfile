@@ -2,10 +2,10 @@ node('buildx') {
     
     String version_prefix = '6.7.1-v2'
     String version_suffix = ''
-    String docker_image_name = 'stuartshay/navigator-grafana'
-    String docker_file = 'docker/navigator-grafana/Dockerfile'
-    String docker_ignore = 'docker/navigator-grafana/.dockerignore'
-    String git_path = 'docker/navigator-grafana' 
+    String docker_image_name = 'stuartshay/kubernetes-grafana'
+    String docker_file = 'docker/grafana/Dockerfile'
+    String docker_ignore = 'docker/grafana/.dockerignore'
+    String git_path = 'docker/grafana' 
     String platform = 'linux/amd64'
     String email = 'sshay@yahoo.com' // TODO FIX
 
