@@ -1,4 +1,4 @@
-node('buildx') {
+node('build') {
     
     String version_prefix = '6.7.1-v2'
     String version_suffix = ''
