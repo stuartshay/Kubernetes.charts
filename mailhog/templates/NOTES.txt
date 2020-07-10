@@ -1,5 +1,7 @@
 Mailhog can be accessed via ports {{ .Values.service.port.http }} (HTTP) and {{ .Values.service.port.smtp }} (SMTP) on the following DNS name from within your cluster:
 {{ template "mailhog.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+Expose mailhog on brwoser using this URL:
+  http://192.168.50.10:32728
 
 If you'd like to test your instance, forward the ports locally:
 

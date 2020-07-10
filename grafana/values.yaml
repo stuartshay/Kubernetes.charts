@@ -48,18 +48,18 @@ admin:
   ## Admin password
   ## If a password is not provided a random password will be generated
   ##
-  # password:
+  password: admin
   ## Name of the existing secret containing admin password
   ##
   # existingSecret:
   ## Password key on the existing secret
   ##
-  existingSecretPasswordKey: password
+  ## existingSecretPasswordKey: password
 
 ## SMTP configuration
 ##
 smtp:
-  enabled: false
+  enabled: true
   ## SMTP credentials
   ##
   user: user
@@ -120,8 +120,7 @@ config:
 ## dashboards from "/opt/bitnami/grafana/dashboards"
 ##
 dashboardsProvider:
-  enabled: false
-  ## ConfigMap with a custom provider file.
+  enabled: true
   ## Important to set the Path to "/opt/bitnami/grafana/dashboards"
   ## Evaluated as a template.
   configMapName:
@@ -130,9 +129,9 @@ dashboardsProvider:
 ## They will be mounted by the default dashboard provider if it is enabled
 ## Use an array with the configMap names.
 ## Example:
-## dashboardsConfigMaps:
-##   - configMapName: mydashboard
-##     fileName: mydashboard.json
+#dashboardsConfigMaps:
+ #- configMapName: dashboard-1
+  # fileName: k8s-volume.json
 ##   - configMapName: myotherdashboard
 ##     fileName: myotherdashboard.json
 ##
@@ -142,8 +141,7 @@ dashboardsConfigMaps: []
 ## The secret must contain the files
 ##
 datasources:
-  secretName:
-
+  secretName: 
 ## Number of grafana Pod replicas
 ##
 replicaCount: 1
@@ -248,11 +246,11 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  ##  storageClass: "-"
+  # storageClass: "-"
   ##
   ## If you want to reuse an existing claim, you can pass the name of the PVC using
   ## the existingClaim variable
-  existingClaim: grafana-pvc
+  ## existingClaim: grafana-pvc
   accessMode: ReadWriteOnce
   size: 10Gi
 
@@ -338,7 +336,7 @@ ingress:
 ## Prometheus metrics
 ##
 metrics:
-  enabled: false
+  enabled: true
 
   ## Prometheus Operator ServiceMonitor configuration
   ##

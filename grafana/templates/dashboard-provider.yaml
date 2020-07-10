@@ -28,4 +28,5 @@ data:
       options:
         # <string, required> path to dashboard files on disk. Required
         path: /opt/bitnami/grafana/dashboards
+       # path: /opt/bitnami/grafana/conf/provisioning/dashboards
 {{- end }}

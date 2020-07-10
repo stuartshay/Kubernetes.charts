@@ -1,6 +1,11 @@
 ** Please be patient while the chart is being deployed **
 
+Access grafan using this URL:
+  http://192.168.50.10:31182
+
+
 1. Get the application URL by running these commands:
+
 
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}

@@ -1112,44 +1112,49 @@ pushgateway:
     ##
     subPath: ""
 
-
 ## alertmanager ConfigMap entries
 ##
 alertmanagerFiles:
   alertmanager.yml:
-    global: {}
-      # slack_api_url: ''
+    global: 
+      smtp_smarthost: mailhog:1025
+      smtp_from: 'sender@test.com'
+      smtp_auth_username: ''
+      smtp_auth_password: ''
 
     receivers:
       - name: default-receiver
-        # slack_configs:
-        #  - channel: '@you'
-        #    send_resolved: true
+        email_configs:
+         - to: 'receiver@test.com'
+           require_tls: false
 
     route:
+      group_by: ['alertname']
       group_wait: 10s
-      group_interval: 5m
+      group_interval: 10s
       receiver: default-receiver
-      repeat_interval: 3h
+      repeat_interval: 10s
 
+    templates:
+    - '/etc/alertmanager/templates/*.tmpl'
 ## Prometheus server ConfigMap entries
 ##
 serverFiles:
 
   ## Alerts configuration
   ## Ref: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
-  alerting_rules.yml: {}
-  # groups:
-  #   - name: Instances
-  #     rules:
-  #       - alert: InstanceDown
-  #         expr: up == 0
-  #         for: 5m
-  #         labels:
-  #           severity: page
-  #         annotations:
-  #           description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
-  #           summary: 'Instance {{ $labels.instance }} down'
+  alerting_rules.yml: 
+    groups:
+      - name: Alert
+        rules:
+          - alert: CpuUsageMore
+            expr: container_cpu_usage_seconds_total{namespace="default",container="mongo-mongodb"} > 0
+            for: 5s
+            labels:
+              severity: page
+            annotations:
+              description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
+              summary: 'Instance {{ $labels.instance }} down'
   ## DEPRECATED DEFAULT VALUE, unless explicitly naming your files, please use alerting_rules.yml
   alerts: {}
 
@@ -1173,10 +1178,10 @@ serverFiles:
           - targets:
             - localhost:9090
 
-      - job_name: mongo
-        static_configs:
-          - targets:
-            - mongo-mongodb:9216 
+   #   - job_name: mongo
+    #    static_configs:
+     #     - targets:
+      #      - mongo-mongodb:9216 
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.

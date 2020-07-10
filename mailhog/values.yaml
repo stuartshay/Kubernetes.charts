@@ -8,17 +8,17 @@ fullnameOverride: ""
 
 service:
   annotations: {}
-  clusterIP: ""
+  nodePort: ""
   externalIPs: []
   loadBalancerIP: ""
   loadBalancerSourceRanges: []
-  type: ClusterIP
+  type: NodePort
   port:
     http: 8025
     smtp: 1025
   nodePort:
-    http: ""
-    smtp: ""
+    http: 32728
+    smtp: 31112
 
 securityContext:
   runAsUser: 1000
