@@ -3,6 +3,10 @@
 Access grafan using this URL:
   http://192.168.50.10:31182
 
+Configure datasource using the DNS:
+     http://prometheus-server:8080
+                    or
+     http://prometheus-server.default.svc.cluster.local
 
 1. Get the application URL by running these commands:
 
