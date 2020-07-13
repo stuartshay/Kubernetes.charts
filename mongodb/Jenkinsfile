@@ -35,7 +35,7 @@ node('master') {
 
           echo ' ADD -- strict after fixing warnings'
 
-          if (helm_push.equalsIgnoreCase('true'))
+          if (helm_push_mongodb.equalsIgnoreCase('true'))
           dir("$helm_package_name")
           {
             echo "$git_branch"
@@ -49,7 +49,7 @@ node('master') {
 
             echo 'FIX navigator below'
 
-          if (helm_push.equalsIgnoreCase('true'))
+          if (helm_push_mongodb.equalsIgnoreCase('true'))
           dir("$helm_package_name")
           {
             def exists = fileExists "../$helm_package_name"

@@ -17,6 +17,10 @@
 
 ** Please be patient while the chart is being deployed **
 
+To connect to your database from outside the cluster execute the following commands:
+   
+   mongo --host 192.168.50.11 --port 31445
+
 MongoDB can be accessed via port {{ .Values.service.port }} on the following DNS name from within your cluster:
 
     {{- if .Values.clusterDomain }}

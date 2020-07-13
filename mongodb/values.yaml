@@ -84,9 +84,9 @@ usePassword: true
 ## MongoDB custom user and database
 ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#creating-a-user-and-database-on-first-run
 ##
-# mongodbUsername: username
-# mongodbPassword: password
-# mongodbDatabase: database
+# mongodbUsername: user
+# mongodbPassword: admin
+# mongodbDatabase: mu_db
 
 ## Whether enable/disable IPv6 on MongoDB
 ## ref: https://github.com/bitnami/bitnami-docker-mongodb/blob/master/README.md#enabling/disabling-ipv6
@@ -304,7 +304,7 @@ persistence:
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
   ##
-  existingClaim: mongodb-pvc
+  existingClaim: nfs-pvc-2
 
   ## The path the volume will be mounted at, useful when using different
   ## MongoDB images.
@@ -452,7 +452,7 @@ configmap:
 ## Prometheus Exporter / Metrics
 ##
 metrics:
-  enabled: false
+  enabled: true
 
   image:
     registry: docker.io
