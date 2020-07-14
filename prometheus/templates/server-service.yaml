@@ -11,8 +11,7 @@ metadata:
 {{- if .Values.server.service.labels }}
 {{ toYaml .Values.server.service.labels | indent 4 }}
 {{- end }}
-  name: {{ template "prometheus.server.fullname" . }}
-{{ include "prometheus.namespace" . | indent 2 }}
+  name: {{ .Values.server.service.name }}
 spec:
 {{- if .Values.server.service.clusterIP }}
   clusterIP: {{ .Values.server.service.clusterIP }}

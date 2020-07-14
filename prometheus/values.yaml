@@ -5,9 +5,7 @@ podSecurityPolicy:
   enabled: false
 
 imagePullSecrets:
-# - name: "image-pull-secret"
-
-## Define serviceAccount names for components. Defaults to component's fully qualified name.
+# - name: "image-pull-secret"## Define serviceAccount names for components. Defaults to component's fully qualified name.
 ##
 serviceAccounts:
   alertmanager:
@@ -880,6 +878,7 @@ server:
     fsGroup: 65534
 
   service:
+    name: prometheus
     annotations: {}
     labels: {}
     nodePort: 30581
