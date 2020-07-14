@@ -891,7 +891,7 @@ server:
 
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
-    servicePort: 8080
+    servicePort: 9090
     sessionAffinity: None
     type: NodePort
 
