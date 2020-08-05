@@ -6,7 +6,7 @@ metadata:
     tier: storage
     app: app-storage
 spec:
-  storageClassName: nfs-storageclass
+  storageClassName: storageclass-nfs-dynamic
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany

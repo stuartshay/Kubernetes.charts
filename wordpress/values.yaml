@@ -207,14 +207,14 @@ healthcheckHttps: false
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
 ##
 livenessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 120
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 6
   successThreshold: 1
 readinessProbe:
-  enabled: true
+  enabled: false
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
@@ -244,7 +244,7 @@ readinessProbeHeaders: {}
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer or ClusterIP
 ##
 service:
-  type: LoadBalancer
+  type: NodePort
   ## HTTP Port
   ##
   port: 80
@@ -434,7 +434,7 @@ externalDatabase:
 ## Prometheus Exporter / Metrics
 ##
 metrics:
-  enabled: false
+  enabled: true
   image:
     registry: docker.io
     repository: bitnami/apache-exporter
@@ -451,6 +451,8 @@ metrics:
   podAnnotations:
     prometheus.io/scrape: "true"
     prometheus.io/port: "9117"
+    prometheus.io/path: "/metrics"
+
 
   ## Metrics exporter containers' resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
@@ -471,7 +473,7 @@ metrics:
     # namespace: ""
     ## Specify the interval at which metrics should be scraped
     ##
-    interval: 30s
+    interval: 1m
     ## Specify the timeout after which the scrape is ended
     # scrapeTimeout: 30s
     ## Specify Metric Relabellings to add to the scrape endpoint
