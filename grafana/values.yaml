@@ -15,8 +15,8 @@ image:
   registry: docker.io
   #repository: stuartshay/kubernetes-grafana
   #tag: 6.7.1-v2.8
-  repository: bitnami/grafana
-  tag: 6.7.3-debian-10-r28
+  repository: stuartshay/kubernetes-grafana
+  tag: 6.7.1-v2.20
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
