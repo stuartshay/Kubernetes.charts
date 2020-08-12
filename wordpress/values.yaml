@@ -247,7 +247,7 @@ service:
   type: NodePort
   ## HTTP Port
   ##
-  port: 80
+  port: 8086
   ## HTTPS Port
   ##
   httpsPort: 443
