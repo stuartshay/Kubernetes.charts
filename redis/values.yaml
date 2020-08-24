@@ -18,7 +18,7 @@ image:
   ## Bitnami Redis image tag
   ## ref: https://github.com/bitnami/bitnami-docker-redis#supported-tags-and-respective-dockerfile-links
   ##
-  tag: 6.0.3-debian-10-r2
+  tag: 6.0.6-debian-10-r10
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -60,7 +60,7 @@ sentinel:
     ## Bitnami Redis image tag
     ## ref: https://github.com/bitnami/bitnami-docker-redis-sentinel#supported-tags-and-respective-dockerfile-links
     ##
-    tag: 6.0.3-debian-10-r3
+    tag: 6.0.6-debian-10-r11
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -215,11 +215,35 @@ persistence:
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
-  existingClaim: redis-pvc
-  existingClaimSlave: redis-pvc-slave
+  existingClaim:
 
 # Redis port
 redisPort: 6379
+
+##
+## TLS configuration
+##
+tls:
+  # Enable TLS traffic
+  enabled: false
+  #
+  # Whether to require clients to authenticate or not.
+  authClients: true
+  #
+  # Name of the Secret that contains the certificates
+  certificatesSecret:
+  #
+  # Certificate filename
+  certFilename:
+  #
+  # Certificate Key filename
+  certKeyFilename:
+  #
+  # CA Certificate filename
+  certCAFilename:
+  #
+  # File containing DH params (in order to support DH based ciphers)
+  # dhParamsFilename:
 
 ##
 ## Redis Master parameters
@@ -237,7 +261,6 @@ master:
   ## Redis additional command line flags
   ##
   ## Can be used to specify command line flags, for example:
-  ##
   ## extraFlags:
   ##  - "--maxmemory-policy volatile-ttl"
   ##  - "--repl-backlog-size 1024mb"
@@ -327,7 +350,7 @@ master:
     ## Specify the nodePort value for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
-    nodePort: 30021
+    nodePort: 31101
 
     ## Provide any additional annotations which may be required. This can be used to
     ## set the LoadBalancer service type to internal only.
@@ -386,13 +409,13 @@ slave:
   ## Slave Service properties
   service:
     ## Redis Slave Service type
-    type: NodePort
+    type: ClusterIP
     ## Redis port
     port: 6379
     ## Specify the nodePort value for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
-    nodePort: 30020
+    # nodePort:
 
     ## Provide any additional annotations which may be required. This can be used to
     ## set the LoadBalancer service type to internal only.
@@ -497,7 +520,7 @@ slave:
   ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   ##
   persistence:
-    enabled: false
+    enabled: true
     ## The path the volume will be mounted at, useful when using different
     ## Redis images.
     path: /data
@@ -511,7 +534,7 @@ slave:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    storageClass: storageclass-nfs-dynamic
     accessModes:
       - ReadWriteOnce
     size: 8Gi
@@ -536,7 +559,7 @@ metrics:
   image:
     registry: docker.io
     repository: bitnami/redis-exporter
-    tag: 1.6.1-debian-10-r7
+    tag: 1.9.0-debian-10-r20
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -583,7 +606,7 @@ metrics:
     namespace: ""
     ## Redis prometheus rules
     ## These are just examples rules, please adapt them to your needs.
-    ## Make sure to constraint the rules to the current postgresql service.
+    ## Make sure to constraint the rules to the current redis service.
     # rules:
     #   - alert: RedisDown
     #     expr: redis_up{service="{{ template "redis.fullname" . }}-metrics"} == 0
@@ -689,3 +712,11 @@ podSecurityPolicy:
   ## Specifies whether a PodSecurityPolicy should be created
   ##
   create: false
+
+## Define a disruption budget
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+##
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
+  # maxUnavailable: 1

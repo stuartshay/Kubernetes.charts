@@ -2,34 +2,18 @@
 
 [Redis](http://redis.io/) is an advanced key-value cache and store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets, sorted sets, bitmaps and hyperloglogs.
 
-## TL;DR;
+## TL;DR
 
 ```bash
 # Testing configuration
-$ helm repo add chartmuseum https://helm.navigatorglass.com/
-$ helm install my-release chartmuseum/redis
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
+$ helm install my-release bitnami/redis
 ```
 
 ```bash
 # Production configuration
-$ helm repo add chartmuseum https://helm.navigatorglass.com/
-$ helm install my-release chartmuseum/redis --values values-production.yaml
-```
-## Testing
-
-Install redis-cli
-```bash
-sudo apt-get install redis-tools
-```
-Run following commands
-```bash
-export REDIS_PASSWORD=$(kubectl get secret --namespace default redis -o jsonpath="{.data.redis-password}" | base64 --decode)
-export NODE_IP=192.168.50.10
-export NODE_PORT=$(kubectl get --namespace default -o jsonpath="{.spec.ports[0].nodePort}" services redis-master)
-```
-Now connect to redis-master from redis-cli
-```bash
-redis-cli -h $NODE_IP -p $NODE_PORT -a $REDIS_PASSWORD
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
+$ helm install my-release bitnami/redis --values values-production.yaml
 ```
 
 ## Introduction
@@ -152,7 +136,17 @@ The following table lists the configurable parameters of the Redis chart and the
 | `master.statefulset.rollingUpdatePartition`   | Partition update strategy                                                                                                                           | `nil`                                                   |
 | `master.podLabels`                            | Additional labels for Redis master pod                                                                                                              | {}                                                      |
 | `master.podAnnotations`                       | Additional annotations for Redis master pod                                                                                                         | {}                                                      |
+| `podDisruptionBudget.enabled`        | Pod Disruption Budget toggle                                                                                                                                                                                                                                                                                                                                                                         | `false`                                                 |
+| `podDisruptionBudget.minAvailable`   | Minimum available pods                                                                                                                                                                                                                                                                                                                                                                               | `1`                                                   |
+| `podDisruptionBudget.maxUnavailable` | Maximum unavailable pods                                                                                                                                                                                                                                                                                                                                                                             | `nil`                                                   |
 | `redisPort`                                   | Redis port (in both master and slaves)                                                                                                              | `6379`                                                  |
+| `tls.enabled`                                 | Enable TLS support for replication traffic                                                                                                                                                                                               | `false`                                                 |
+| `tls.authClients`                             | Require clients to authenticate or not                                                                                                                                                                                                   | `true`                                                 |
+| `tls.certificatesSecret`                      | Name of the secret that contains the certificates                                                                                                                                                                                          | `nil`                                                   |
+| `tls.certFilename`                            | Certificate filename                                                                                                                                                                                              | `nil`                                                   |
+| `tls.certKeyFilename`                         | Certificate key filename                                                                                                                                                                                              | `nil`                                                   |
+| `tls.certCAFilename`                          | CA Certificate filename                                                                                                                                                                                              |`nil`                                                   |
+| `tls.dhParamsFilename`                        | DH params (in order to support DH based ciphers)                                                                                                                                                                                              |`nil`                                                   |
 | `master.command`                              | Redis master entrypoint string. The command `redis-server` is executed if this is not provided.                                                     | `/run.sh`                                               |
 | `master.configmap`                            | Additional Redis configuration for the master nodes (this value is evaluated as a template)                                                         | `nil`                                                   |
 | `master.disableCommands`                      | Array of Redis commands to disable (master)                                                                                                         | `["FLUSHDB", "FLUSHALL"]`                               |
@@ -170,14 +164,14 @@ The following table lists the configurable parameters of the Redis chart and the
 | `master.service.loadBalancerSourceRanges`     | loadBalancerSourceRanges if redis master service type is `LoadBalancer`                                                                             | `nil`                                                   |
 | `master.resources`                            | Redis master CPU/Memory resource requests/limits                                                                                                    | Memory: `256Mi`, CPU: `100m`                            |
 | `master.livenessProbe.enabled`                | Turn on and off liveness probe (redis master pod)                                                                                                   | `true`                                                  |
-| `master.livenessProbe.initialDelaySeconds`    | Delay before liveness probe is initiated (redis master pod)                                                                                         | `30`                                                    |
-| `master.livenessProbe.periodSeconds`          | How often to perform the probe (redis master pod)                                                                                                   | `30`                                                    |
+| `master.livenessProbe.initialDelaySeconds`    | Delay before liveness probe is initiated (redis master pod)                                                                                         | `5`                                                     |
+| `master.livenessProbe.periodSeconds`          | How often to perform the probe (redis master pod)                                                                                                   | `5`                                                     |
 | `master.livenessProbe.timeoutSeconds`         | When the probe times out (redis master pod)                                                                                                         | `5`                                                     |
 | `master.livenessProbe.successThreshold`       | Minimum consecutive successes for the probe to be considered successful after having failed (redis master pod)                                      | `1`                                                     |
 | `master.livenessProbe.failureThreshold`       | Minimum consecutive failures for the probe to be considered failed after having succeeded.                                                          | `5`                                                     |
 | `master.readinessProbe.enabled`               | Turn on and off readiness probe (redis master pod)                                                                                                  | `true`                                                  |
 | `master.readinessProbe.initialDelaySeconds`   | Delay before readiness probe is initiated (redis master pod)                                                                                        | `5`                                                     |
-| `master.readinessProbe.periodSeconds`         | How often to perform the probe (redis master pod)                                                                                                   | `10`                                                    |
+| `master.readinessProbe.periodSeconds`         | How often to perform the probe (redis master pod)                                                                                                   | `5`                                                     |
 | `master.readinessProbe.timeoutSeconds`        | When the probe times out (redis master pod)                                                                                                         | `1`                                                     |
 | `master.readinessProbe.successThreshold`      | Minimum consecutive successes for the probe to be considered successful after having failed (redis master pod)                                      | `1`                                                     |
 | `master.readinessProbe.failureThreshold`      | Minimum consecutive failures for the probe to be considered failed after having succeeded.                                                          | `5`                                                     |
@@ -200,15 +194,15 @@ The following table lists the configurable parameters of the Redis chart and the
 | `slave.disableCommands`                       | Array of Redis commands to disable (slave)                                                                                                          | `[FLUSHDB, FLUSHALL]`                                   |
 | `slave.extraFlags`                            | Redis slave additional command line flags                                                                                                           | `[]`                                                    |
 | `slave.livenessProbe.enabled`                 | Turn on and off liveness probe (redis slave pod)                                                                                                    | `true`                                                  |
-| `slave.livenessProbe.initialDelaySeconds`     | Delay before liveness probe is initiated (redis slave pod)                                                                                          | `30`                                                    |
-| `slave.livenessProbe.periodSeconds`           | How often to perform the probe (redis slave pod)                                                                                                    | `10`                                                    |
+| `slave.livenessProbe.initialDelaySeconds`     | Delay before liveness probe is initiated (redis slave pod)                                                                                          | `5`                                                     |
+| `slave.livenessProbe.periodSeconds`           | How often to perform the probe (redis slave pod)                                                                                                    | `5`                                                     |
 | `slave.livenessProbe.timeoutSeconds`          | When the probe times out (redis slave pod)                                                                                                          | `5`                                                     |
 | `slave.livenessProbe.successThreshold`        | Minimum consecutive successes for the probe to be considered successful after having failed (redis slave pod)                                       | `1`                                                     |
 | `slave.livenessProbe.failureThreshold`        | Minimum consecutive failures for the probe to be considered failed after having succeeded.                                                          | `5`                                                     |
 | `slave.readinessProbe.enabled`                | Turn on and off slave.readiness probe (redis slave pod)                                                                                             | `true`                                                  |
 | `slave.readinessProbe.initialDelaySeconds`    | Delay before slave.readiness probe is initiated (redis slave pod)                                                                                   | `5`                                                     |
-| `slave.readinessProbe.periodSeconds`          | How often to perform the probe (redis slave pod)                                                                                                    | `10`                                                    |
-| `slave.readinessProbe.timeoutSeconds`         | When the probe times out (redis slave pod)                                                                                                          | `10`                                                    |
+| `slave.readinessProbe.periodSeconds`          | How often to perform the probe (redis slave pod)                                                                                                    | `5`                                                     |
+| `slave.readinessProbe.timeoutSeconds`         | When the probe times out (redis slave pod)                                                                                                          | `1`                                                     |
 | `slave.readinessProbe.successThreshold`       | Minimum consecutive successes for the probe to be considered successful after having failed (redis slave pod)                                       | `1`                                                     |
 | `slave.readinessProbe.failureThreshold`       | Minimum consecutive failures for the probe to be considered failed after having succeeded. (redis slave pod)                                        | `5`                                                     |
 | `slave.persistence.enabled`                   | Use a PVC to persist data (slave node)                                                                                                              | `true`                                                  |
@@ -326,6 +320,10 @@ This chart includes a `values-production.yaml` file where you can find some para
 + metrics.enabled: true
 ```
 
+### Change Redis version
+
+To modify the Redis version used in this chart you can specify a [valid image tag](https://hub.docker.com/r/bitnami/redis/tags/) using the `image.tag` parameter. For example, `image.tag=X.Y.Z`. This approach is also applicable to other images like exporters.
+
 ### Cluster topologies
 
 #### Default: Master-Slave
@@ -366,6 +364,36 @@ existingSecret=redis-password-file
 sentinels.enabled=true
 metrics.enabled=true
 ```
+
+### Securing traffic using TLS
+
+TLS support can be enabled in the chart by specifying the `tls.` parameters while creating a release. The following parameters should be configured to properly enable the TLS support in the chart:
+
+- `tls.enabled`: Enable TLS support. Defaults to `false`
+- `tls.certificatesSecret`: Name of the secret that contains the certificates. No defaults.
+- `tls.certFilename`: Certificate filename. No defaults.
+- `tls.certKeyFilename`: Certificate key filename. No defaults.
+- `tls.certCAFilename`: CA Certificate filename. No defaults.
+
+For example:
+
+First, create the secret with the cetificates files:
+
+```console
+kubectl create secret generic certificates-tls-secret --from-file=./cert.pem --from-file=./cert.key --from-file=./ca.pem
+```
+
+Then, use the following parameters:
+
+```console
+tls.enabled="true"
+tls.certificatesSecret="certificates-tls-secret"
+tls.certFilename="cert.pem"
+tls.certKeyFilename="cert.key"
+tls.certCAFilename="ca.pem"
+```
+
+> **Note TLS and Prometheus Metrics**: Current version of Redis Metrics Exporter (v1.6.1 at the time of writing) does not fully support the use of TLS. By enabling both features, the metric reporting pod is likely to not work as expected. See Redis Metrics Exporter issue [387](https://github.com/oliver006/redis_exporter/issues/387) for more information.
 
 ### Metrics
 
